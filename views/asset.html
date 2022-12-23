@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Asset</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <h1>Asset <%= person?.name %>
+        </h1>
+    </nav>
+    <main>
+        <section id="asset">
+            <table id="asset-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% assets.forEach(function(asset) { %>
+                        <tr>
+                            <td>
+                                <%= asset.id %>
+                            </td>
+                            <td>
+                                <%= asset.name %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Family</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <h1>Family</h1>
+  </nav>
+  <main>
+    <section id="people">
+      <h2>People</h2>
+      <table id="people-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Parent</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% people.forEach(function(person) { %>
+            <tr>
+                <td>
+                    <%= person.id %>
+                </td>
+                <td>
+                    <%= person.name %>
+                </td>
+                <td>
+                  <%= person.gender %>
+              </td>
+              <td>
+                <%= person.parent %>
+            </td>
+            <td>
+              <a href="${item.id}">Asset</a>
+          </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+// fetch('/people')
+//   .then(response => response.json())
+//   .then(data => {
+//     // Store the data in a JavaScript object
+//     const peopleData = {};
+//     data.forEach(item => {
+//       peopleData[item.id] = {
+//         name: item.name,
+//         gender: item.gender,
+//         parent: item.parent
+//       };
+//     });
+
+//     // Get the table body element
+//     const tbody = document.querySelector('#people-table tbody');
+
+//     // Iterate through the data and create table rows
+//     data.forEach(item => {
+//       // Look up the parent's name using the parent's ID
+//       let parentName = '';
+//       if (item.parent) {
+//         parentName = peopleData[item.parent].name;
+//       }
+
+//       // Create the table row
+//       const tr = document.createElement('tr');
+//       tr.innerHTML = `
+//         <td>${item.id}</td>
+//         <td>${item.name}</td>
+//         <td>${item.gender}</td>
+//         <td>${parentName}</td>
+//         <td>
+//           <a href="${item.id}">person</a>
+//           <button>Edit</button>
+//           <button>Delete</button>
+//         </td>
+//       `;
+//       tbody.appendChild(tr);
+//     });
+//   });
+
+
+  </script>
+</body>
+
+</html>
