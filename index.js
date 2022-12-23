@@ -22,35 +22,31 @@ const db = new sqlite3.Database('./database.db', (err) => {
 
 
 
+// API
 app.get('/people', async (req, res) => {
     const result = await server.getPeople()
     res.json(result);
 });
 
+app.post('/people/:id', (req, res) => {
+    const id = req.params.id;
+    const name = req.body.name;
+    const gender = req.body.gender;
+    const parent = req.body.parent;
+    console.log(req);
+    const result = server.updatePerson(id, name, gender, parent)
+    if(result){
+        res.json({ message: 'Person updated successfully' });
+    }
+});
 
+
+
+// VIEW
 app.get('/', async (req, res) => {
     const people = await server.getPeople()
-    let peopleData = {}
-    people.forEach(item => {
-        peopleData[item.id] = {
-            name: item.name,
-            gender: item.gender,
-            parent: item.parent
-        };
-    });
-
-    const peopleWithParent = people.map((person) => {
-
-        const newPerson = {
-            id: person.id,
-            name: person.name,
-            gender: person.gender,
-            parent: (peopleData[person.parent])?.name || ""
-        }
-        return newPerson;
-    });
     
-    res.render(path.join(__dirname, '/views', 'index.html'), { people: peopleWithParent });
+    res.render(path.join(__dirname, '/views', 'index.html'), { people: people });
 });
 
 app.get('/:personId', async (req, res) => {
@@ -58,6 +54,14 @@ app.get('/:personId', async (req, res) => {
     const person = await server.getPerson(personId)
     const assets = await server.getAssets(personId)
     res.render(path.join(__dirname, '/views', 'asset.html'), { person: person, assets: assets });
+});
+
+
+app.get('/:personId/edit', async (req, res) => {
+    const personId = req.params.personId;
+    const person = await server.getPerson(personId)
+    const people = await server.getPeople()
+    res.render(path.join(__dirname, '/views/person', 'edit.html'), { person: person, people: people });
 });
 
 

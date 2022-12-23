@@ -1,0 +1,54 @@
+<html>
+
+<body>
+  <h1>Edit Person</h1>
+  <form action="/people/<%= person.id %>" method="post">
+    <label for="name">Name:</label>
+    <input value="<%= person.name %>" type="text" id="name" name="name" required>
+    <br>
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+      <option value="F">Female</option>
+      <option value="M">Male</option>
+    </select>
+    <br>
+    <label for="parent">Parent:</label>
+    <select id="parent" name="parent">
+      <option value="">null</option>
+      <% people.forEach(function(parent) { %>
+        <option value="<%= parent.id %>"><%= parent.name %></option>
+      <% }); %>
+    </select>
+    <!-- <input value="<%= person.parent %>" type="number" id="parent" name="parent"> -->
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+  <script>
+    function setGender() {
+      const selectElement = document.getElementById('gender');
+      const options = selectElement.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].value === "<%= person.gender %>") {
+          options[i].selected = true;
+          break;
+        }
+      }
+    }
+    function setParent() {
+      const selectElement = document.getElementById('parent');
+      const options = selectElement.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].value === "<%= person.parent %>") {
+          options[i].selected = true;
+          break;
+        }
+      }
+    }
+
+
+    setGender()
+    setParent()
+  </script>
+</body>
+
+</html>
