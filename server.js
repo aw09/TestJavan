@@ -75,10 +75,23 @@ const getPerson = async (id) => {
     return result
 }
 
+const createPerson = async (name, gender, parent) => {
+    const sql = `INSERT INTO Person (name, gender, parent) VALUES (?, ?, ?);`
+    const result = queryRun(sql, [name, gender, parent])
+    return result;
+}
+
 const updatePerson = (id, name, gender, parent) => {
     const sql = `UPDATE Person SET name = ?, gender = ?, parent = ? WHERE id = ?`;
     const result = queryRun(sql, [name, gender, parent, id])
     return result;
+}
+
+const deletePerson = (id) => {
+    const sql = `DELETE FROM Person WHERE id = ?`;
+    const result = queryRun(sql, [id]);
+    console.log(result);
+    return result
 }
 
 const getAssets = async (id) => {
@@ -90,6 +103,8 @@ module.exports = {
     getPeople: getPeople,
     getPerson: getPerson,
     getAssets: getAssets,
-    updatePerson: updatePerson
+    createPerson: createPerson,
+    updatePerson: updatePerson,
+    deletePerson: deletePerson
 }
 

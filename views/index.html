@@ -13,6 +13,7 @@
   <main>
     <section id="people">
       <h2>People</h2>
+      <a href="new">New Person</a>
       <table id="people-table">
         <thead>
           <tr>
@@ -26,22 +27,19 @@
         <tbody>
           <% people.forEach(function(person) { %>
             <tr>
-                <td>
-                    <%= person.id %>
-                </td>
-                <td>
-                    <%= person.name %>
-                </td>
-                <td>
-                  <%= person.gender %>
-              </td>
+              <td><%= person.id %></td>
+              <td><%= person.name %></td>
+              <% if(person.gender == "M") { %>
+                <td>Male</td>
+              <% }else{ %>
+                <td>Female</td>
+              <% } %>
+              <td><%= person.parent %></td>
               <td>
-                <%= person.parent %>
-            </td>
-            <td>
-              <a href="<%= person.id %>">Asset</a>
-              <a href="<%= person.id %>/edit">Edit</a>
-          </td>
+                <a href="<%= person.id %>">Asset</a>
+                <a href="<%= person.id %>/edit">Edit</a>
+                <a href="people/<%= person.id %>/delete">Delete</a>
+              </td>
             </tr>
             <% }); %>
         </tbody>
