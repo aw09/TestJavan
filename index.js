@@ -28,22 +28,29 @@ app.get('/people', async (req, res) => {
 });
 
 
-app.delete('/people/:personId/assets/:assetId', (req, res) => {
-    const personId = req.params.personId;
-    const assetId = req.params.assetId;
-    const sql = `DELETE FROM Asset WHERE person_id = ? AND id = ?`;
-    db.run(sql, [personId, assetId], function (err) {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json({ message: 'Asset deleted successfully' });
-    });
-});
-
 app.get('/', async (req, res) => {
     const people = await server.getPeople()
-    res.render(path.join(__dirname, '/views', 'index.html'), { people: people });
+    let peopleData = {}
+    people.forEach(item => {
+        peopleData[item.id] = {
+            name: item.name,
+            gender: item.gender,
+            parent: item.parent
+        };
+    });
+
+    const peopleWithParent = people.map((person) => {
+
+        const newPerson = {
+            id: person.id,
+            name: person.name,
+            gender: person.gender,
+            parent: (peopleData[person.parent])?.name || ""
+        }
+        return newPerson;
+    });
+    
+    res.render(path.join(__dirname, '/views', 'index.html'), { people: peopleWithParent });
 });
 
 app.get('/:personId', async (req, res) => {
