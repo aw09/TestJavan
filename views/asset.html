@@ -16,26 +16,46 @@
             <table id="asset-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
+                        <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% assets.forEach(function(asset) { %>
                         <tr>
-                            <td>
-                                <%= asset.id %>
-                            </td>
-                            <td>
-                                <%= asset.name %>
-                            </td>
+                            <td class="name"><%= asset.name %></td>
+                            <td class="price"></td>
                         </tr>
                         <% }); %>
+                        <tr>
+                            <td>Total Asset</td>
+                            <td id="total"></td>
+                        </tr>
                 </tbody>
             </table>
         </section>
     </main>
     <script>
+        function getPrice(){
+            const nameElement = document.getElementsByClassName('name');
+            let total = 0;
+            
+            for (let i=0; i<nameElement.length; i++){
+                const productName = nameElement[i].innerHTML;
+                console.log(productName);
+                const priceElement = document.getElementsByClassName('price')[i];
+                fetch('https://dummyjson.com/products/search?q='+productName)
+                    .then(res => res.json())
+                    .then(data => {
+                        const price = data?.products[0]?.price || 0
+                        priceElement.innerHTML = price
+                        total += price
+                        const totalElement = document.getElementById('total');
+                        totalElement.innerHTML = total
+                    });
+            }
+        }
+        getPrice()
     </script>
 </body>
 
