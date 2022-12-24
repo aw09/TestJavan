@@ -32,11 +32,11 @@ const queryFirst = async (sql, params = []) => {
 
 const queryRun = async (sql, params = []) => {
     return new Promise((resolve, reject) => {
-        db.run(sql, params, (err, rows) => {
+        db.run(sql, params, (err, _) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(rows);
+                resolve('success');
             }
         });
     });
@@ -75,21 +75,27 @@ const getPerson = async (id) => {
     return result
 }
 
+const getPersonFromAsset = async (id) => {
+    const sql = `SELECT * FROM Person JOIN Asset WHERE Asset.id = ?`;
+    const result = await queryFirst(sql, [id]);
+    return result
+}
+
 const createPerson = async (name, gender, parent) => {
     const sql = `INSERT INTO Person (name, gender, parent) VALUES (?, ?, ?);`
-    const result = queryRun(sql, [name, gender, parent])
+    const result = await queryRun(sql, [name, gender, parent])
     return result;
 }
 
-const updatePerson = (id, name, gender, parent) => {
+const updatePerson = async (id, name, gender, parent) => {
     const sql = `UPDATE Person SET name = ?, gender = ?, parent = ? WHERE id = ?`;
-    const result = queryRun(sql, [name, gender, parent, id])
+    const result = await queryRun(sql, [name, gender, parent, id])
     return result;
 }
 
-const deletePerson = (id) => {
+const deletePerson = async (id) => {
     const sql = `DELETE FROM Person WHERE id = ?`;
-    const result = queryRun(sql, [id]);
+    const result = await queryRun(sql, [id]);
     return result
 }
 
@@ -126,6 +132,7 @@ const deleteAsset = async (id) => {
 module.exports = {
     getPeople: getPeople,
     getPerson: getPerson,
+    getPersonFromAsset: getPersonFromAsset,
     getAssets: getAssets,
     createPerson: createPerson,
     updatePerson: updatePerson,

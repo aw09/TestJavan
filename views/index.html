@@ -7,8 +7,14 @@
 </head>
 
 <body>
+  <% if (message) { %>
+    <div id="message">
+      <%= message %>
+    </div>
+  <% } %>
+
   <nav>
-    <h1>Family</h1>
+    <a href="/">Home</a>
   </nav>
   <main>
     <section id="people">
@@ -46,6 +52,17 @@
       </table>
     </section>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const message = document.querySelector('#message');
+      setTimeout(() => {
+        message.remove();
+        const currentUrl = window.location.href;
+        const urlWithoutParams = currentUrl.split('?')[0];
+        history.replaceState({}, '', urlWithoutParams);
+      }, 3000);
+    });
+  </script>
 </body>
 
 </html>

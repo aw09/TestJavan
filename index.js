@@ -13,47 +13,53 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', __dirname + '/views');
 
 
-// API
+// ================= API =================
 app.get('/people', async (req, res) => {
     const result = await server.getPeople()
     res.json(result);
 });
 
-app.post('/people', (req, res) => {
+app.post('/people', async (req, res) => {
     const name = req.body.name;
     const gender = req.body.gender;
     const parent = req.body.parent;
-    const result = server.createPerson(name, gender, parent)
+    
+    const result = await server.createPerson(name, gender, parent);
+    const message = "New Person Inserted";
     if(result){
-        res.json({ message: 'New Person Inserted' });
+        res.redirect(`/?message=${message}`);
     }
 });
 
-app.post('/people/:id', (req, res) => {
+app.post('/people/:id', async (req, res) => {
     const id = req.params.id;
     const name = req.body.name;
     const gender = req.body.gender;
     const parent = req.body.parent;
-    const result = server.updatePerson(id, name, gender, parent)
+    
+    const result = await server.updatePerson(id, name, gender, parent)
+    const message = 'Person updated successfully'
     if(result){
-        res.json({ message: 'Person updated successfully' });
+        res.redirect(`/?message=${message}`);
     }
 });
 
-app.get('/people/:id/delete', (req, res) => {
+app.get('/people/:id/delete', async (req, res) => {
     const id = req.params.id;
-    const result = server.deletePerson(id)
+    const result = await server.deletePerson(id)
+    const message = 'Person deleted successfully'
     if(result){
-        res.json({ message: 'Person deleted successfully' });
+        res.redirect(`/?message=${message}`);
     }
 });
 
 app.post('/asset/new', async (req, res) => {
     const name = req.body.name;
     const personId = req.body.owner;
-    const result = server.createAsset(name, personId)
+    const person = await server.getPerson(personId);
+    const result = await server.createAsset(name, personId);
     if(result){
-        res.json({ message: 'New Asset Inserted' });
+        res.redirect(`/${person.id}?message=New Asset Inserted`);
     }
 });
 
@@ -62,30 +68,31 @@ app.post('/asset/:id', async (req, res) => {
     const id = req.params.id;
     const name = req.body.name;
     const personId = req.body.owner;
-    const result = server.updateAsset(id, name, personId)
+    const person = await server.getPerson(personId);
+    const result = await server.updateAsset(id, name, personId)
     if(result){
-        res.json({ message: 'Asset updated successfully' });
+        res.redirect(`/${person.id}?message=Asset Updated successfully`);
     }
 });
 
 app.get('/asset/:id/delete', async (req, res) => {
     const id = req.params.id;
-    const result = server.deleteAsset(id)
+    const asset = await server.getAsset(id);
+    const result = await server.deleteAsset(id)
     if(result){
-        res.json({ message: 'Asset deleted successfully' });
+        res.redirect(`/${asset.person_id}?message=Asset deleted successfully`);
     }
 });
 
 
 
 
-
-
-// VIEW
+// ================= VIEW =================
 app.get('/', async (req, res) => {
     const people = await server.getPeople()
+    const message = req.query.message;
     
-    res.render(path.join(__dirname, '/views', 'index.html'), { people: people });
+    res.render(path.join(__dirname, '/views', 'index.html'), { people: people, message: message });
 });
 
 app.get('/new', async (req, res) => {
@@ -96,9 +103,11 @@ app.get('/new', async (req, res) => {
 
 app.get('/:personId', async (req, res) => {
     const personId = req.params.personId;
+    const message = req.query.message;
+
     const person = await server.getPerson(personId)
     const assets = await server.getAssets(personId)
-    res.render(path.join(__dirname, '/views', 'detail.html'), { person: person, assets: assets });
+    res.render(path.join(__dirname, '/views', 'detail.html'), { person: person, assets: assets, message: message });
 });
 
 
