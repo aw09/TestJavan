@@ -90,21 +90,49 @@ const updatePerson = (id, name, gender, parent) => {
 const deletePerson = (id) => {
     const sql = `DELETE FROM Person WHERE id = ?`;
     const result = queryRun(sql, [id]);
-    console.log(result);
     return result
 }
 
-const getAssets = async (id) => {
+const getAssets = async (personId) => {
     const sql = `SELECT * FROM Asset WHERE person_id = ?`;
-    const result = await queryAll(sql, [id]);
+    const result = await queryAll(sql, [personId]);
     return result
 }
+
+const getAsset = async (id) => {
+    const sql = `SELECT * FROM Asset WHERE id = ?`;
+    const result = await queryFirst(sql, [id]);
+    return result
+}
+
+const createAsset = async (name, personId) => {
+    const sql = `INSERT INTO Asset (name, person_id) VALUES (?, ?)`;
+    const result = await queryRun(sql, [name, personId]);
+    return result
+}
+
+const updateAsset = async (id, name, personId) => {
+    const sql = `UPDATE Asset SET name = ?, person_id = ? WHERE id = ?`;
+    const result = await queryRun(sql, [name, personId, id]);
+    return result
+}
+
+const deleteAsset = async (id) => {
+    const sql = `DELETE FROM Asset WHERE id = ?`;
+    const result = await queryRun(sql, [id]);
+    return result
+}
+
 module.exports = {
     getPeople: getPeople,
     getPerson: getPerson,
     getAssets: getAssets,
     createPerson: createPerson,
     updatePerson: updatePerson,
-    deletePerson: deletePerson
+    deletePerson: deletePerson,
+    getAsset: getAsset,
+    createAsset: createAsset,
+    updateAsset: updateAsset,
+    deleteAsset: deleteAsset
 }
 
