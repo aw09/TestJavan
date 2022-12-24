@@ -1,0 +1,53 @@
+nav a{
+    text-decoration: none;
+}
+
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #bdbdbd;
+    text-align: center;
+}
+.table td,
+.table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table tr:hover {
+    background-color: #ddd;
+}
+.btn {
+    display: block;
+    width: 90px;
+    height: 25px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+    background: #4E9CAF;
+    color: white;
+}
+
+.btn.asset {
+    background: #59af4e;
+    color: white;
+}
+
+.btn.edit {
+    background: #142cff;
+    color: white;
+}
+
+.btn.delete {
+    background: #fc3737;
+    color: white;
+}
+
+.action {
+    display: flex;
+    gap: 4px;
+}

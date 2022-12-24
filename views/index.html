@@ -3,7 +3,7 @@
 
 <head>
   <title>Family</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -14,13 +14,13 @@
   <% } %>
 
   <nav>
-    <a href="/">Home</a>
+    <a href="/">← Go to Home</a>
   </nav>
   <main>
     <section id="people">
       <h2>People</h2>
-      <a href="new">New Person</a>
-      <table id="people-table">
+      <a class="btn new" href="new">New Person</a>
+      <table class="table people">
         <thead>
           <tr>
             <th>ID</th>
@@ -41,10 +41,10 @@
                 <td>Female</td>
               <% } %>
               <td><%= person.parent %></td>
-              <td>
-                <a href="<%= person.id %>">Asset</a>
-                <a href="<%= person.id %>/edit">Edit</a>
-                <a href="/people/<%= person.id %>/delete">Delete</a>
+              <td class="action">
+                <a class="btn asset" href="<%= person.id %>">Asset</a>
+                <a class="btn edit" href="<%= person.id %>/edit">Edit</a>
+                <a class="btn delete" href="/people/<%= person.id %>/delete">Delete</a>
               </td>
             </tr>
             <% }); %>

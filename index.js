@@ -11,6 +11,7 @@ app.set('view engine', 'html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', __dirname + '/views');
+app.use(express.static('public'));
 
 
 // ================= API =================

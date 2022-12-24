@@ -3,7 +3,7 @@
 
 <head>
     <title>Asset</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -13,13 +13,13 @@
         </div>
       <% } %>
     <nav>
-        <a href="/">Home</a>
+        <a href="/">← Go to Home</a>
     </nav>
     <main>
         <h1>Asset <%= person?.name %></h1>
         <section id="asset">
-            <a href="/asset/new">New Asset</a>
-            <table id="asset-table">
+            <a class="btn" href="/asset/new">New Asset</a>
+            <table class="table asset">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -32,16 +32,22 @@
                         <tr>
                             <td class="name"><%= asset.name %></td>
                             <td class="price"></td>
-                            <td>
-                                <a href="/asset/<%= asset.id %>/edit">Edit</a>
-                                <a href="/asset/<%= asset.id %>/delete">Delete</a>
+                            <td class="action">
+                                <a class="btn edit" href="/asset/<%= asset.id %>/edit">Edit</a>
+                                <a class="btn delete" href="/asset/<%= asset.id %>/delete">Delete</a>
                             </td>
                         </tr>
                         <% }); %>
                         <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="total-row">
                             <td>Total Asset</td>
                             <td id="total"></td>
                         </tr>
+                        
                 </tbody>
             </table>
         </section>
@@ -58,6 +64,7 @@
         });
         function getPrice(){
             const nameElement = document.getElementsByClassName('name');
+            const totalElement = document.getElementById('total');
             let total = 0;
             
             for (let i=0; i<nameElement.length; i++){
@@ -69,10 +76,11 @@
                         const price = data?.products[0]?.price || 0
                         priceElement.innerHTML = price
                         total += price
-                        const totalElement = document.getElementById('total');
+                        
                         totalElement.innerHTML = total
                     });
             }
+            totalElement.innerHTML = total
         }
         getPrice()
     </script>
