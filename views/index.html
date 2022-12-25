@@ -9,7 +9,7 @@
 <body>
   <% if (message) { %>
     <div id="message">
-      <%= message %>
+      <p><%= message %></p>
     </div>
   <% } %>
 
@@ -23,7 +23,6 @@
       <table class="table people">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Gender</th>
             <th>Parent</th>
@@ -33,7 +32,6 @@
         <tbody>
           <% people.forEach(function(person) { %>
             <tr>
-              <td><%= person.id %></td>
               <td><%= person.name %></td>
               <% if(person.gender == "M") { %>
                 <td>Male</td>
