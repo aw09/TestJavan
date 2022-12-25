@@ -1,32 +1,40 @@
 <html>
+
+<head>
+  <title>New Asset</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
 <body>
   <nav>
     <a href="/">← Go to Home</a>
   </nav>
-  <h1>Edit Asset</h1>
-  <form action="/asset/<%= asset.id %>" method="post">
-    <label for="name">Name:</label>
-    <input value="<%= asset.name %>" type="text" id="name" name="name" required>
-    <br>
-    <label for="name">Owner:</label>
-    <select id="owner" name="owner" required>
-      <% people.forEach(function(person) { %>
-        <option value="<%= person.id %>"><%= person.name %></option>
-      <% }); %>
-    </select>
-    <br>
-    <br>
-    <input type="submit" value="Submit">
-  </form>
-  <script>
-    function setOwner() {
-      const selectElement = document.getElementById('owner');
-      const options = selectElement.options;
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].value === "<%= asset.person_id %>") {
-          options[i].selected = true;
-          break;
-        }
+  <section>
+    <h1>Edit Asset</h1>
+    <form action="/asset/<%= asset.id %>" method="post">
+      <label for="name">Name:</label>
+      <input value="<%= asset.name %>" type="text" id="name" name="name" required>
+      <br>
+      <label for="name">Owner:</label>
+      <select id="owner" name="owner" required>
+        <% people.forEach(function(person) { %>
+          <option value="<%= person.id %>"><%= person.name %></option>
+          <% }); %>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+  </section>
+      <script>
+        function setOwner() {
+          const selectElement = document.getElementById('owner');
+          const options = selectElement.options;
+          for (let i = 0; i < options.length; i++) {
+            if (options[i].value === "<%= asset.person_id %>") {
+              options[i].selected = true;
+              break;
+            }
       }
     }
 
